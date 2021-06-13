@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import nextstep.subway.line.domain.Line;
 import nextstep.subway.line.domain.LineRepository;
+import nextstep.subway.line.domain.LineStation;
 import nextstep.subway.line.dto.LineRequest;
 import nextstep.subway.line.dto.LineResponse;
 import nextstep.subway.section.domain.Distance;
-import nextstep.subway.section.domain.Section;
-import nextstep.subway.section.domain.SectionRepository;
+import nextstep.subway.section.dto.SectionRequest;
 import nextstep.subway.station.domain.Station;
 import nextstep.subway.station.domain.StationRepository;
 
@@ -54,6 +54,15 @@ public class LineService {
 		Station upStation = stationRepository.findById(request.getUpStationId()).orElseThrow(EntityNotFoundException::new);
 		Station downStation = stationRepository.findById(request.getDownStationId()).orElseThrow(EntityNotFoundException::new);
 		line.update(request.toLine(upStation, downStation));
+		return LineResponse.of(line);
+	}
+
+	public LineResponse addSection(Long id, SectionRequest request) {
+		Line line = findByIdLine(id);
+		Station upStation = stationRepository.findById(request.getUpStationId()).orElseThrow(EntityNotFoundException::new);
+		Station downStation = stationRepository.findById(request.getDownStationId()).orElseThrow(EntityNotFoundException::new);
+		line.addLineStation(new LineStation(line, null, upStation, new Distance(0)));
+		line.addLineStation(new LineStation(line, upStation, downStation, new Distance(request.getDistance())));
 		return LineResponse.of(line);
 	}
 

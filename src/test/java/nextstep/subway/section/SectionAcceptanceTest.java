@@ -28,7 +28,7 @@ public class SectionAcceptanceTest extends AcceptanceTest {
 	void sectionSetUp() {
 		sungSuStationId = StationAcceptanceTest.지하철역_생성되어_있음(new StationRequest("성수역"));
 		gangNamStationId = StationAcceptanceTest.지하철역_생성되어_있음(new StationRequest("강남역"));
-		LineRequest lineNumber2 = new LineRequest("2호선", "Green", gangNamStationId, sungSuStationId, 10);
+		LineRequest lineNumber2 = new LineRequest("2호선", "Green", sungSuStationId, gangNamStationId, 10);
 		lineNumber2Id = LineAcceptanceTest.지하철_노선_생성되어_있음(lineNumber2);
 	}
 
@@ -41,9 +41,9 @@ public class SectionAcceptanceTest extends AcceptanceTest {
 		ExtractableResponse<Response> response = 지하철_노선에_지하철역_등록_요청(sectionRequest);
 		// then
 		// 지하철_노선에_지하철역_등록됨
-		assertThat(response.body().jsonPath().getList("stations[0].name")).isEqualTo("성수역");
-		assertThat(response.body().jsonPath().getList("stations[1].name")).isEqualTo("강남역");
-		assertThat(response.body().jsonPath().getList("stations[2].name")).isEqualTo("사당역");
+		assertThat(response.body().jsonPath().getString("stations[0].name")).isEqualTo("성수역");
+		assertThat(response.body().jsonPath().getString("stations[1].name")).isEqualTo("강남역");
+		assertThat(response.body().jsonPath().getString("stations[2].name")).isEqualTo("사당역");
 	}
 
 	@DisplayName("노선에 구간을 앞에 등록한다.")
@@ -55,9 +55,9 @@ public class SectionAcceptanceTest extends AcceptanceTest {
 		ExtractableResponse<Response> response = 지하철_노선에_지하철역_등록_요청(sectionRequest);
 		// then
 		// 지하철_노선에_지하철역_등록됨
-		assertThat(response.body().jsonPath().getList("stations[0].name")).isEqualTo("뚝섬역");
-		assertThat(response.body().jsonPath().getList("stations[1].name")).isEqualTo("성수역");
-		assertThat(response.body().jsonPath().getList("stations[2].name")).isEqualTo("강남역");
+		assertThat(response.body().jsonPath().getString("stations[0].name")).isEqualTo("뚝섬역");
+		assertThat(response.body().jsonPath().getString("stations[1].name")).isEqualTo("성수역");
+		assertThat(response.body().jsonPath().getString("stations[2].name")).isEqualTo("강남역");
 	}
 
 	@DisplayName("노선에 구간을 중간에 등록한다.")
@@ -69,9 +69,9 @@ public class SectionAcceptanceTest extends AcceptanceTest {
 		ExtractableResponse<Response> response = 지하철_노선에_지하철역_등록_요청(sectionRequest);
 		// then
 		// 지하철_노선에_지하철역_등록됨
-		assertThat(response.body().jsonPath().getList("stations[0].name")).isEqualTo("성수역");
-		assertThat(response.body().jsonPath().getList("stations[1].name")).isEqualTo("건대입구역");
-		assertThat(response.body().jsonPath().getList("stations[2].name")).isEqualTo("강남역");
+		assertThat(response.body().jsonPath().getString("stations[0].name")).isEqualTo("성수역");
+		assertThat(response.body().jsonPath().getString("stations[1].name")).isEqualTo("건대입구역");
+		assertThat(response.body().jsonPath().getString("stations[2].name")).isEqualTo("강남역");
 	}
 
 	ExtractableResponse<Response> 지하철_노선에_지하철역_등록_요청(SectionRequest sectionRequest) {

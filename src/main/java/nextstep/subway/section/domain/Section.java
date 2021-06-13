@@ -65,6 +65,7 @@ public class Section {
 		return this.distance;
 	}
 
+	/*
 	public void setLine(Line line) {
 		if (Objects.nonNull(this.line)) {
 			this.line.getSections().remove(this);
@@ -72,7 +73,7 @@ public class Section {
 		this.line = line;
 		line.getSections().add(this);
 	}
-
+	*/
 	public List<Station> toStations() {
 		return new LinkedList<>(Arrays.asList(this.upStation, this.downStation));
 	}

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import nextstep.subway.line.domain.Line;
+import nextstep.subway.line.domain.LineStation;
 import nextstep.subway.section.domain.Distance;
 import nextstep.subway.section.domain.Section;
 import nextstep.subway.station.domain.Station;
@@ -20,20 +21,24 @@ public class LineTest {
 	void getStationsTest() {
 		//given
 		Line lineShinBunDang = new Line("신분당선", "red");
-		Station upStationGangNam = new Station("강남역");
-		Station downStationPanGyo = new Station("판교역");
-		Section firstSection = new Section(lineShinBunDang, upStationGangNam, downStationPanGyo, new Distance(5));
-		lineShinBunDang.addSection(firstSection);
 
-		Station upStationPanGyo = new Station("판교역");
-		Station downStationGwangGyo = new Station("광교역");
-		Section secondSection = new Section(lineShinBunDang, upStationPanGyo, downStationGwangGyo, new Distance(7));
-		lineShinBunDang.addSection(secondSection);
+		Station stationGangNam = new Station("강남역");
+		Station stationPanGyo = new Station("판교역");
+
+		LineStation firstSection = new LineStation(lineShinBunDang, null, stationGangNam, new Distance(0));
+		LineStation secondSection = new LineStation(lineShinBunDang, stationGangNam, stationPanGyo, new Distance(5));
+
+		lineShinBunDang.addLineStation(firstSection);
+		lineShinBunDang.addLineStation(secondSection);
+
+		Station stationGwangGyo = new Station("광교역");
+		LineStation thirdSection = new LineStation(lineShinBunDang, stationPanGyo, stationGwangGyo, new Distance(7));
+		lineShinBunDang.addLineStation(thirdSection);
 
 		//when
 		List<Station> actual = lineShinBunDang.getStations();
 
 		//then
-		assertThat(actual).isEqualTo(Lists.list(upStationGangNam, downStationPanGyo, downStationGwangGyo));
+		assertThat(actual).isEqualTo(Lists.list(stationGangNam, stationPanGyo, stationGwangGyo));
 	}
 }

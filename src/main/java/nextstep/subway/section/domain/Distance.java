@@ -25,7 +25,7 @@ public class Distance {
 	}
 
 	private void validate(int distance) {
-		if(MIN_DISTANCE >= distance)
+		if(MIN_DISTANCE > distance)
 			throw new IllegalArgumentException("거리는 0보다 작을 수 없습니다.");
 	}
 }
